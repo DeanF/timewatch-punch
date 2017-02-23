@@ -1,4 +1,3 @@
-from http import HTTPStatus
 from urllib.parse import urljoin
 
 import requests
@@ -31,7 +30,7 @@ class TimeWatch(object):
                                     'pw': self.password
                                 }, allow_redirects=False)
 
-        if res.status_code != HTTPStatus.OK:
+        if res.status_code != 200:
             raise TimeWatchLoginError(res.text)
         parsed = parse_html(res.text)
         self.ix_employee = \
@@ -53,7 +52,7 @@ class TimeWatch(object):
                                     'teamleader': 0,
                                     'tflag': ''
                                 })
-        if res.status_code != HTTPStatus.OK:
+        if res.status_code != 200:
             raise TimeWatchError(res.text)
         return True
 
