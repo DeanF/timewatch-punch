@@ -1,30 +1,44 @@
-"""
-Flask Documentation:     http://flask.pocoo.org/docs/
-Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
-Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
-This file creates your application.
-"""
-
 import os
 from flask import Flask, request
-
-import main
+from timewatch import TimeWatchClient
 
 app = Flask(__name__)
 
-@app.route('/log', methods=['POST'])
-def log():
-    params = request.get_json(force=True)
-    main.main(params['company'], params['employee'], params['pw'], params['action'])
-    return 'OK'
+
+@app.route('/punch-in', methods=['POST'])
+def punch_in():
+    body = request.get_json(force=True)
+
+    company = body['company']
+    employee_id = body['employeeId']
+    password = body['password']
+
+    client = TimeWatchClient(company, employee_id, password)
+    client.login()
+    client.punch_in()
+
+    return ':+1:'
+
+
+@app.route('/punch-out', methods=['POST'])
+def punch_out():
+    body = request.get_json(force=True)
+
+    company = body['company']
+    employee_id = body['employeeId']
+    password = body['password']
+
+    client = TimeWatchClient(company, employee_id, password)
+    client.login()
+    client.punch_out()
+
+    return ':+1:'
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    """Custom 404 page."""
-    return '<html><head><title>Go away</title></head></html>'
+    return '<html><head><title>...</title></head></html>'
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
