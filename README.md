@@ -22,7 +22,7 @@ Login to IFTTT and create 2 new applets based on location, one for entering the 
 
 - set the location with a decent radius
 
-- set the url to `https://timewatch-ws.herokuapp.com/punch-out` or `https://timewatch-ws.herokuapp.com/punch-in`11111
+- set the url to `https://timewatch-ws.herokuapp.com/punch-out` or `https://timewatch-ws.herokuapp.com/punch-in`
 
 - set the http method to `POST`
 
