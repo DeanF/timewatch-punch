@@ -1,17 +1,27 @@
-from urllib.parse import urljoin
+# -*- coding: utf-8 -*-
 
 import requests
 from bs4 import BeautifulSoup
 
 from .exceptions import TimeWatchLoginError, TimeWatchError
 
-SITE_URL = 'http://checkin.timewatch.co.il/punch/'
-PUNCH_IN = 'כניסה'
-PUNCH_OUT = 'יציאה'
+SITE_URL = "http://checkin.timewatch.co.il/punch/"
+PUNCH_IN = r"כניסה"
+PUNCH_OUT = r"יציאה"
+
+HEADERS = {
+    'User-Agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
+    'Referer': "http://checkin.timewatch.co.il/punch/punch2.php"
+}
 
 
 def parse_html(html_doc):
     return BeautifulSoup(html_doc, 'html.parser')
+
+
+def urljoin(*parts):
+    parts = map(lambda x: x.strip('/'), parts)
+    return '/'.join(parts)
 
 
 class TimeWatch(object):
@@ -28,7 +38,7 @@ class TimeWatch(object):
                                     'comp': self.company,
                                     'name': self.employee,
                                     'pw': self.password
-                                }, allow_redirects=False)
+                                }, allow_redirects=False, headers=HEADERS)
 
         if res.status_code != 200:
             raise TimeWatchLoginError(res.text)
@@ -51,7 +61,8 @@ class TimeWatch(object):
                                     'thetask': 0,
                                     'teamleader': 0,
                                     'tflag': ''
-                                })
+                                }, headers=HEADERS)
+
         if res.status_code != 200:
             raise TimeWatchError(res.text)
         return True
