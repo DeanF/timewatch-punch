@@ -1,6 +1,8 @@
 ## Security note from the author
 ***The following links to herokuapps have been provided by 3rd parties, it is EXTREMELY recommended you host your own instance of this API.***
 
+If you insist, however, this repository is automatically published at https://timewatch-checkin.herokuapp.com/ as seen on the [deployments page](https://github.com/DeanF/timewatch-punch/deployments).
+
 ### Force me to click on buttons you shall not
 
 http://timewatch.co.il is a simple (and annoying) web application given to employees to mark the time of their arrival and departure to/from work.  
